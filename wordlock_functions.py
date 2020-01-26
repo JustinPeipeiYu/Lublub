@@ -88,50 +88,34 @@ def change_state(game_state: str, section_num: int, move: str) -> str:
     "CATDOGFOXMUE"
     """
     
-    #for this particular function, the max of the sections is not needed to be rounded up
-    max_num_sec = len(ANSWER) / SECTION_LENGTH    
+    #for this particular function, compute the last sub section
+    last_section = len(game_state) / SECTION_LENGTH    
     
     #get the starting index
     start = get_section_start(section_num)
     
-    
-    #if it is the last section
-    if section_num == max_num_sec:
-        #let memory variable c hold the last term of the section
-        c = game_state[len(game_state)-1]
-        d = SECTION_LENGTH - 1
-    elif section_num <= max_num_sec:    
-        #let variable d hold the length of the section minus first term
-        d = len(game_state)-section_num * SECTION_LENGTH - 1        
-    else:
-        #let memory variable c hold the last term of the section by adding the section length minus 1
-        c = game_state[start + SECTION_LENGTH - 1]
-        #let d hold the length of the last section minus first term
-        d = SECTION_LENGTH - 1 
-    
-    #run the move
-    if move == ROTATE:
-            #go through every element from the starting index to the end and move it
-            #to the right one place
-            #if we have two numbers to swap, we only want to move one up then place
-            #the other down
-            
-            for i in range(0,d):
-                print(start + d - i)
-                #start at the last element and move the element before it to it's spot
-                game_state[start + d - i] = game_state[start + d -1 - i]
-                #move the last element to the front of section
-                
-                game_state[start] = c                  
-              
-    if move == SWAP:
-            #Make the first item of section last
-            game_state[start + d + 1] = game_start[start]
-            #Make the last item of section first
-            game_state[start] = c
-    
-    
-    
-    #return the game state with the modifications
-    return game_state
+    #if move is swap, then swap the last and first characters of sub section
+    if move == swap:
+        first_character = game_state[start]
+        if last_section >= section_number:
+            #get the last index when the sub section is the last sub section
+            last = len(game_state) - 1
+        else:
+            #get the last index when the sub section is somewhere in the middle of word
+            last = start + SECTION_LENGTH - 1
+        
+        #get last character
+        last_character = game_state[last]      
+        
+        #store the new game_state
+        new_state = ""
+        
+        #build a new game_state switching last character and first characters
+        for i in range(len(game_state)):
+            if i == last:
+                new_state += first_character
+            elif i == first:
+                new_state += last_character
+            else:
+                new_state += game_state[i]
     
