@@ -139,3 +139,42 @@ def change_state(game_state: str, section_num: int, move: str) -> str:
                 
     return new_state
     
+def get_move_hint(game_state: str,section_num :int) -> str:
+    """Return hints to rearrange the sub section of game_state indicated by section_num
+    until it matches that same sub section of ANSWER
+    >>>get_move_hint("CATDOGFOXMUE",4)
+    S
+    >>>get_move_hint("CATDOGFOXEUM",4)
+    S
+    """
+    
+    #compute the start index of game sub section using section num
+    start = get_section_start(section_num)
+    
+    #compute the end index of game sub section using section num and length of 3
+    end = start + 3
+    
+    #get the sub section of game_state and compare to that of ANSWER
+    game_section = game_state[start:end] 
+    answer_section = ANSWER[start:end]
+    
+    #variable to store output 
+    hint = ""
+    
+    #compare the middle character, if it is right, just swap once to get to answer  
+    if game_section[1] == answer_section[1]:
+        hint = "S"
+    else:
+        #if the first character needs to be moved to middle, suggest rotate 
+        if game_section[0] == answer_section[1]:
+            hint = "R"
+        #if the third character needs to be moved to middle, suggest  or rotate
+        elif game_section[2] == answer_section[1]:
+            #if the middle character needs to be moved to front, suggest rotate
+            if game_section[1] == answer_section[0]:
+                hint = "R"
+            #if the middle character needs to be moved to the end, suggest swap
+            else:   
+                hint = "S"
+    
+    return hint
