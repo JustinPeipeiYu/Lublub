@@ -60,21 +60,19 @@ def check_section(game_state: str, section_num: int) -> bool:
     False
     """
     
+    #compute the whole number of sub sections in the word
+    num_sub_sec = len(ANSWER) // SECTION_LENGTH     
     
-    #rounds the maximum number of sections up to the nearest interger because need 
-    #to include an example like 4.25 sections
-    max_num_sec = len(ANSWER) // SECTION_LENGTH + 1    
+    #compute the start index of substring to be compared
+    start = get_section_start(section_num)
     
-    #check if the starting index, and every index up to the SECTION_LENGTH past 
+    #if it is the last section of the word, then check the substring up until the end of the word
+    if section_num == num_sub_sec:
+        return game_state[start:] == ANSWER[start:]
+    
+    #check if a substring consisting of the start index and the SECTION_LENGTH past 
     #starting index is same as in the ANSWER
-    
-    #if it is the last section of the word, then check everything up until the end of the word
-    if section_num == max_num_sec - 1:
-        return game_state[get_section_start(section_num):] == ANSWER[get_section_start(section_num):]
-    
-    #if it isn't the last section, check everything up to SECTION_LENGTH past 
-    #starting index
-    return game_state[get_section_start(section_num): get_section_start(section_num) + SECTION_LENGTH] == ANSWER[get_section_start(section_num): get_section_start(section_num) + SECTION_LENGTH]
+    return game_state[start: start + SECTION_LENGTH] == ANSWER[start: start + SECTION_LENGTH]
         
 def change_state(game_state: str, section_num: int, move: str) -> str:
     """Return a string with the move applied on the section of game_state indicated by the 
