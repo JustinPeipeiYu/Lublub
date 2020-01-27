@@ -42,11 +42,10 @@ def is_valid_section(section_num: int) -> bool:
     True
     """
     
-    #rounds the maximum number of sections up to the nearest interger because need 
-    #to include an example like 4.25 sections
-    max_num_sec = len(ANSWER) // SECTION_LENGTH + 1
+    #get the whole number of sub sections in the word 
+    num_sub_sec = len(ANSWER) // SECTION_LENGTH 
     
-    if section_num > 0 and max_num_sec > section_num:    
+    if section_num > 0 and num_sub_sec >= section_num:    
         return True
     return False
 
