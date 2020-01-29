@@ -18,6 +18,7 @@ def get_section_start(section_num: int) -> int:
     6
     """
    
+   #like saying finding what multiple of section length we start on (k.i.m. start = 0)
     return SECTION_LENGTH * (section_num - 1) 
     
 def is_valid_move(move: str) -> bool:
@@ -29,6 +30,7 @@ def is_valid_move(move: str) -> bool:
     FALSE
     """
     
+    #if any of them are true, then we return true otherwise false
     if move == SWAP or move == ROTATE or move == CHECK:
         return True
     return False
@@ -45,6 +47,7 @@ def is_valid_section(section_num: int) -> bool:
     #get the whole number of sub sections in the word 
     num_sub_sec = len(ANSWER) // SECTION_LENGTH 
     
+    #if it's withen the range of 0 to the max number of sections, it is a valid section
     if section_num > 0 and num_sub_sec >= section_num:    
         return True
     return False
@@ -130,8 +133,6 @@ def change_state(game_state: str, section_num: int, move: str) -> str:
         for i in range(len(game_state)):
             if i == first:
                 new_state += last_character
-            elif i == first + 1:
-                new_state += first_character
             elif i>first and i<= last:
                 new_state += game_state[i-1]
             else:
