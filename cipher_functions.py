@@ -2,7 +2,7 @@
 
 from typing import List
 
-# Used to determine whether to encrypt or decrypt
+
 ENCRYPT = 'e'
 DECRYPT = 'd'
 
@@ -29,7 +29,7 @@ def clean_message(message: str) -> str:
     return edited_message
 
 
-def encrypt_letter(letter:str, keystream_value: int) -> str:
+def encrypt_letter(letter: str, keystream_value: int) -> str:
     """Return a string with letter converted to an encrypted letter by adding 
     the keystream_value to its unencrypted ascii number to obtain it's encrypted 
     ascii number then converting back to a letter
@@ -45,16 +45,13 @@ def encrypt_letter(letter:str, keystream_value: int) -> str:
     
     encrypted_value = ord(letter) - 64 + keystream_value
     if encrypted_value > 26:
-        loop_around = True
-    else:
-        loop_around = False
-    if loop_around:
         encrypted_value = encrypted_value % 26
     encrypted_letter = chr(encrypted_value + 64)
     return encrypted_letter
     
     
-def decrypt_letter(letter:str, keystream_value:int) -> str:
+def decrypt_letter(letter: str, keystream_value: int) -> str:
+    
     """Return a string with letter decrypted by subtracting the keystream value 
     from the encrypted ascii number of a letter to get the decrypted ascii 
     number of the letter then converting it back to a letter
@@ -70,10 +67,6 @@ def decrypt_letter(letter:str, keystream_value:int) -> str:
     
     decrypted_value = ord(letter) - 64 - keystream_value
     if decrypted_value < 1:
-        loop_around = True
-    else:
-        loop_around= False
-    if loop_around:
         decrypted_value = decrypted_value + 26
     decrypted_letter = chr(decrypted_value + 64)
     return decrypted_letter
@@ -91,14 +84,13 @@ def is_valid_deck(deck: List[int]) -> bool:
     Precondition: The size of the deck is always 28  
     """
     
-    is_valid = True
-    for i in range(1,29):
+    for i in range(1, 29):
         if not i in deck:
-            is_valid = False
-    return is_valid
+            return False
+    return True
     
     
-def swap_cards(deck: List[int], index:int) -> None:
+def swap_cards(deck: List[int], index: int) -> None:
     """Swap the card at the index provided with the card before it in the list
     
     >>> deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,28]
@@ -109,8 +101,8 @@ def swap_cards(deck: List[int], index:int) -> None:
     >>> deck
     [28, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 2]
     
-    Precondition: The list is a valid list with numbers 1-28, the index is a 
-    valid index from 0-27
+    Precondition: deck is a valid deck with at least 2 elements, the index is a 
+    valid index from 0 to len(deck)-1
     """
     
     index_card = deck[index]
@@ -132,7 +124,7 @@ def find_high_and_second_high_values(deck: List[int]) -> List[int]:
     >>> find_high_and_second_high_values(deck)
     [29, 28]
     
-    Precondition: The list has at least two elements which are numbers
+    Precondition: deck is a valid deck with at least two elements
     """
     
     highest_value = 0
@@ -157,7 +149,7 @@ def get_small_joker_value(deck: List[int]) -> int:
     >>> get_small_joker_value(deck)
     28
     
-    Precondition: deck has at least two elements that are numbers
+    Precondition: deck is a valid deck with at least two elements
     """
     
     a_list_of_highs = find_high_and_second_high_values(deck)
@@ -174,7 +166,7 @@ def get_big_joker_value(deck: List[int]) -> int:
     >>> get_big_joker_value(deck)
     29
     
-    Precondition: deck has at least two elements that are numbers
+    Precondition: deck is a valid deck with at least two elements
     """
     
     a_list_of_highs = find_high_and_second_high_values(deck)
@@ -193,16 +185,15 @@ def move_small_joker(deck: List[int]) -> None:
     >>> deck
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 27, 25, 26, 28]
     
-    Precondition: There has to be at least two elements in deck that are numbers
-    and the small joker appears only once
+    Precondition: deck is a valid deck and the second highest card occurs once
     """
     
     small_joker_value = get_small_joker_value(deck)
-    index_of_small_joker = find_index_of_card(deck,small_joker_value)
-    swap_cards(deck,index_of_small_joker)
+    index_of_small_joker = find_index_of_card(deck, small_joker_value)
+    swap_cards(deck, index_of_small_joker)
 
 
-def find_index_of_card(deck: List[int],card_value: int) -> int:
+def find_index_of_card(deck: List[int], card_value: int) -> int:
     """Return the index of card value in deck.
     
     >>> deck = [28, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 1]
@@ -211,9 +202,10 @@ def find_index_of_card(deck: List[int],card_value: int) -> int:
     >>> find_index_of_card(deck, 27)
     26
     
-    Precondition: card value appears in deck exactly once 
+    Precondition: deck is a valid deck and the card appears once
     """
     
+    index_card_value = -1
     for i in range(len(deck)):
         if deck[i] == card_value:
             index_card_value = i    
@@ -232,8 +224,7 @@ def move_big_joker(deck: List[int]) -> None:
     >>> deck
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 28, 25, 26, 27]
     
-    Precondition: There are at least two elements in the deck and the big joker
-    appears only once
+    Precondition: deck is a valid deck and the big joker appears once
     """
     
     big_joker_value = get_big_joker_value(deck)
@@ -257,34 +248,30 @@ def triple_cut(deck: List[int]) -> None:
     >>> deck
     [24, 25, 26, 27, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 1, 2, 3, 4, 5, 6, 7, 8]
     
-    Precondition: There has to be at least two cards in deck.
+    Precondition: deck is a valid deck with at exactly two jokers
     """
     
     a_list_of_highs = find_high_and_second_high_values(deck)
     big_joker = a_list_of_highs[0]
     small_joker = a_list_of_highs[1]
     counter = 0
+    index_of_first = -1
+    index_of_second = -1
     for i in range(len(deck)):
         if (deck[i] == big_joker or deck[i] == small_joker) and counter == 0:
-            index_of_first_occurence = i
+            index_of_first = i
             counter = counter + 1
         elif (deck[i] == big_joker or deck[i] == small_joker) and counter == 1:
-            index_of_second_occurence = i    
-    first_section = deck[:index_of_first_occurence]
-    first_joker = deck[index_of_first_occurence: index_of_first_occurence + 1]
-    second_section = deck[index_of_first_occurence + 1: index_of_second_occurence]
-    second_joker = deck[index_of_second_occurence: index_of_second_occurence + 1]
-    if (index_of_second_occurence) == (len(deck) - 1):
+            index_of_second = i    
+    first_section = deck[:index_of_first]
+    second_section = deck[index_of_first: index_of_second + 1]
+    if (index_of_second) == (len(deck) - 1):
         third_section = []
     else:
-        third_section = deck[index_of_second_occurence + 1:]
+        third_section = deck[index_of_second + 1:]
     for i in range(len(deck)):
         deck.pop()
-    deck.extend(third_section) 
-    deck.extend(first_joker) 
-    deck.extend(second_section) 
-    deck.extend(second_joker)
-    deck.extend(first_section)
+    deck.extend(third_section + second_section + first_section)
    
     
 def insert_top_to_bottom(deck: List[int]) -> None:
@@ -300,7 +287,7 @@ def insert_top_to_bottom(deck: List[int]) -> None:
     >>> deck
     [19, 20, 21, 22, 23, 24, 28, 1, 2, 3, 4, 5, 6, 25, 26, 27, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 7]
     
-    Precondition: deck is valid with at least two cards
+    Precondition: deck is a valid deck with at least two elements
     """
     
     a_list_of_highs = find_high_and_second_high_values(deck)
@@ -309,7 +296,7 @@ def insert_top_to_bottom(deck: List[int]) -> None:
         last_card = a_list_of_highs[1]
     top = deck[:last_card]
     for i in range(last_card):
-        deck.pop(0)
+        deck.pop(i-i)
     deck.extend(top)
     deck.extend([last_card])
     
@@ -325,7 +312,7 @@ def get_card_at_top_index(deck: List[int]) -> int:
     >>> get_card_at_top_index(deck)
     7
     
-    Precondition: The deck must be a valid deck with at least two elements.
+    Precondition: The deck is be a valid deck with at least two elements.
     """
     
     a_list_of_highs = find_high_and_second_high_values(deck)
@@ -345,19 +332,50 @@ def get_next_keystream_value(deck: List[int]) -> int:
     >>> deck = [23, 26, 28, 9, 12, 15, 18, 21, 24, 2, 27, 1, 4, 7, 10, 13, 16, 19, 22, 25, 3, 5, 8, 11, 14, 17, 20, 6]
     >>> get_next_keystream_value(deck)
     4
+    
+    Precondition: deck is a valid deck with at least two elements
     """
     
     a_list_of_highs = find_high_and_second_high_values(deck)
-    keystream_value = a_list_of_highs[0]
-    while (keystream_value == a_list_of_highs[0]) or (keystream_value == a_list_of_highs[1]):
+    big_joker_value = a_list_of_highs[0]
+    small_joker_value = a_list_of_highs[1]
+    keystream = big_joker_value
+    while (keystream == big_joker_value) or (keystream == small_joker_value):
         move_small_joker(deck)
         move_big_joker(deck)
         triple_cut(deck)
         insert_top_to_bottom(deck)
-        keystream_value = get_card_at_top_index(deck)
-    return keystream_value
+        keystream = get_card_at_top_index(deck)
+    return keystream
 
 
+def process_messages(deck: List[int], messages: List[str], action: str) -> None:
+    """Return a list of messages representing the messages modified according to 
+    action with keystream_values generated using deck.
+    
+    >>> process_messages([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], ["a7b%c","d7e*f "], 'e')
+    ['TSA', 'SJR']
+    >>> process_messages([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], ['T S6%A','S8*J R'], 'd')
+    ['ABC', 'DEF']
+    
+    Precondition: the deck is a valid deck with at least two elements, 
+    action is either 'e' or 'd'
+    """
+    
+    result = []
+    for message in messages:
+        new_message = ""
+        cleaned_message = clean_message(message)
+        for letter in cleaned_message:
+            keystream = get_next_keystream_value(deck)
+            if action == ENCRYPT:
+                new_message = new_message + encrypt_letter(letter, keystream)
+            else:
+                new_message = new_message + decrypt_letter(letter, keystream)
+        result.extend([new_message])
+    return result
+    
+    
 if __name__ == '__main__':
     """Did you know that you can get Python to automatically run and check
     your docstring examples? These examples are called "doctests".
@@ -375,4 +393,3 @@ if __name__ == '__main__':
 
     import doctest
     doctest.testmod()
-
