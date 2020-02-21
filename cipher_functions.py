@@ -28,6 +28,7 @@ def clean_message(message: str) -> str:
             edited_message += char
     return edited_message
 
+
 def encrypt_letter(letter:str, keystream_value: int) -> str:
     """Return a string with letter converted to an encrypted letter by adding 
     the keystream_value to its unencrypted ascii number to obtain it's encrypted 
@@ -51,6 +52,7 @@ def encrypt_letter(letter:str, keystream_value: int) -> str:
         encrypted_value = encrypted_value % 26
     encrypted_letter = chr(encrypted_value + 64)
     return encrypted_letter
+    
     
 def decrypt_letter(letter:str, keystream_value:int) -> str:
     """Return a string with letter decrypted by subtracting the keystream value 
@@ -76,6 +78,7 @@ def decrypt_letter(letter:str, keystream_value:int) -> str:
     decrypted_letter = chr(decrypted_value + 64)
     return decrypted_letter
 
+
 def is_valid_deck(deck: List[int]) -> bool:
     """Return a boolean telling the computer whether deck is valid or not based 
     on if all numbers from range 1-28 are contained in deck or not
@@ -93,6 +96,7 @@ def is_valid_deck(deck: List[int]) -> bool:
         if not i in deck:
             is_valid = False
     return is_valid
+    
     
 def swap_cards(deck: List[int], index:int) -> None:
     """Swap the card at the index provided with the card before it in the list
@@ -116,6 +120,7 @@ def swap_cards(deck: List[int], index:int) -> None:
         previous_index = index - 1
     deck[index] = deck[previous_index]
     deck[previous_index] = index_card
+    
     
 def find_high_and_second_high_values(deck: List[int]) -> List[int]:
     """Return the a list of the values of the second highest and highest cards
@@ -141,6 +146,7 @@ def find_high_and_second_high_values(deck: List[int]) -> List[int]:
     list_of_highs = [highest_value, second_highest_value]
     return list_of_highs
     
+    
 def get_small_joker_value(deck: List[int]) -> int:
     """Return the value of the smallest joker (the second highest card)
     
@@ -157,6 +163,7 @@ def get_small_joker_value(deck: List[int]) -> int:
     a_list_of_highs = find_high_and_second_high_values(deck)
     return a_list_of_highs[1]
 
+
 def get_big_joker_value(deck: List[int]) -> int:
     """Return the value of the biggest joker (the highest card)
     
@@ -172,6 +179,7 @@ def get_big_joker_value(deck: List[int]) -> int:
     
     a_list_of_highs = find_high_and_second_high_values(deck)
     return a_list_of_highs[0]
+
 
 def move_small_joker(deck: List[int]) -> None:
     """Mutate the deck by swapping the small joker with the card directly before 
@@ -193,6 +201,7 @@ def move_small_joker(deck: List[int]) -> None:
     index_of_small_joker = find_index_of_card(deck,small_joker_value)
     swap_cards(deck,index_of_small_joker)
 
+
 def find_index_of_card(deck: List[int],card_value: int) -> int:
     """Return the index of card value in deck.
     
@@ -209,6 +218,7 @@ def find_index_of_card(deck: List[int],card_value: int) -> int:
         if deck[i] == card_value:
             index_card_value = i    
     return index_card_value
+    
     
 def move_big_joker(deck: List[int]) -> None:
     """Mutate the deck by swapping the big joker twice, each time with the card
@@ -231,6 +241,7 @@ def move_big_joker(deck: List[int]) -> None:
     swap_cards(deck, index_of_big_joker)
     index_of_big_joker = find_index_of_card(deck, big_joker_value)
     swap_cards(deck, index_of_big_joker)
+
 
 def triple_cut(deck: List[int]) -> None:
     """Modifies the deck by swapping the cards before the first occurence of a 
@@ -274,6 +285,7 @@ def triple_cut(deck: List[int]) -> None:
     deck.extend(second_section) 
     deck.extend(second_joker)
     deck.extend(first_section)
+   
     
 def insert_top_to_bottom(deck: List[int]) -> None:
     """Modify the deck by taking the number of cards represented by the value of
@@ -300,6 +312,27 @@ def insert_top_to_bottom(deck: List[int]) -> None:
         deck.pop(0)
     deck.extend(top)
     deck.extend([last_card])
+    
+    
+def get_card_at_top_index(deck: List[int]) -> int:
+    """Return the value of the card at the index indicated by the value of the
+    top card in deck
+    
+    >>> deck = [25, 26, 27, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 28, 1, 2, 3, 4, 5, 6, 7]
+    >>> get_card_at_top_index(deck)
+    5
+    >>> deck = [28, 26, 27, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 1, 2, 3, 4, 5, 6, 7]
+    >>> get_card_at_top_index(deck)
+    7
+    
+    Precondition: The deck must be a valid deck with at least two elements.
+    """
+    
+    a_list_of_highs = find_high_and_second_high_values(deck)
+    top_card = deck[0]
+    if top_card == a_list_of_highs[0]:
+        top_card = a_list_of_highs[1]
+    return deck[top_card]
     
 if __name__ == '__main__':
     """Did you know that you can get Python to automatically run and check
