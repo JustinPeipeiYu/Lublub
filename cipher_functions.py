@@ -333,7 +333,31 @@ def get_card_at_top_index(deck: List[int]) -> int:
     if top_card == a_list_of_highs[0]:
         top_card = a_list_of_highs[1]
     return deck[top_card]
+  
+  
+def get_next_keystream_value(deck: List[int]) -> int:
+    """Return an int representing a valid keystream value, repeat the first five
+    steps until a valid keystream value is produced.
     
+    >>> deck = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 3, 6, 9, 12, 15, 18, 21, 24, 27, 2, 5, 8, 11, 14, 17, 20, 23, 26]
+    >>> get_next_keystream_value(deck)
+    3
+    >>> deck = [23, 26, 28, 9, 12, 15, 18, 21, 24, 2, 27, 1, 4, 7, 10, 13, 16, 19, 22, 25, 3, 5, 8, 11, 14, 17, 20, 6]
+    >>> get_next_keystream_value(deck)
+    4
+    """
+    
+    a_list_of_highs = find_high_and_second_high_values(deck)
+    keystream_value = a_list_of_highs[0]
+    while (keystream_value == a_list_of_highs[0]) or (keystream_value == a_list_of_highs[1]):
+        move_small_joker(deck)
+        move_big_joker(deck)
+        triple_cut(deck)
+        insert_top_to_bottom(deck)
+        keystream_value = get_card_at_top_index(deck)
+    return keystream_value
+
+
 if __name__ == '__main__':
     """Did you know that you can get Python to automatically run and check
     your docstring examples? These examples are called "doctests".
