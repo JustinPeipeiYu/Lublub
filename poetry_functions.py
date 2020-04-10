@@ -46,7 +46,7 @@ def split_by_newline(raw_poem: str) -> List[str]:
 def remove_empty_lines(lines: List[str]) -> List[str]:
     """Return a list of the lines with empty lines removed.
     
-    >>>remove_empty_lines(['The first line leads off,', '', '', 'With a gap before the next.', '     Then the poem ends.', ''])
+    >>> remove_empty_lines(['The first line leads off,', '', '', 'With a gap before the next.', '     Then the poem ends.', ''])
     ['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.']
     """
     non_empty_lines = []
@@ -59,7 +59,7 @@ def break_apart_by_space(non_empty_lines: List[str]) -> List[List[str]]:
     """Return a list of the lines broken apart by spaces to create a list 
     of words for each line.
     
-    >>>break_apart_by_space(['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.'])
+    >>> break_apart_by_space(['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.'])
     [['The', 'first', 'line', 'leads', 'off,'], ['With', 'a', 'gap', 'before', 'the', 'next.'], ['     Then', 'the', 'poem', 'ends.']]
     """
     
@@ -111,21 +111,21 @@ def extract_phonemes(
 def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
     """Return a string containing all the phonemes in each word in each line in
     poem_pronunciation. The phonemes are separated by spaces, the words are
-    separated by ' | ', and the lines are separated by '\n'.
+    separated by ' | ', and the lines are separated by '\\n'.
 
     >>> phonemes_to_str([[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]])
-    'Y EH1 S\nN OW1 | Y EH1 S'
+    'Y EH1 S\\nN OW1 | Y EH1 S'
     """
     
     poem_joined = []
     for line in poem_pronunciation:
-        list_of_word_joined = []
+        list_of_words = []
         for word in line:
             word_joined = " ".join(word)
-            list_of_word_joined.append(word_joined)
-        one_list = " | ".join(list_of_word_joined)
-        poem_joined.append(one_list)
-    return "\n".join(poem_joined)
+            list_of_words.append(word_joined)
+        one_line = " | ".join(list_of_words)
+        poem_joined.append(one_line)
+    return "\\n".join(poem_joined)
 
 def get_common_last_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> Dict[str, List[int]]:
     """Return a dictionary of syllables as the keys with values as a list of all the line numbers
@@ -199,9 +199,9 @@ def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
     line.
     
     >>> get_num_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']]])
-    [1,1]
+    [1, 1]
     >>> get_num_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']], [['T','AH0'], ['H', 'AH0']]])
-    [1,1,2]
+    [1, 1, 2]
     """
     
     syllables_for_lines = []
@@ -214,9 +214,8 @@ def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
         syllables_for_lines.append(number_of_syllables)
     return syllables_for_lines
 
-'''
+
 if __name__ == '__main__':
     import doctest
 
     doctest.testmod()
-'''
