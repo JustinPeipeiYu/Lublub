@@ -9,7 +9,12 @@ from poetry_constants import (
     CLEAN_POEM, WORD_PHONEMES, LINE_PRONUNCIATION, POEM_PRONUNCIATION,
     PRONOUNCING_DICTIONARY)
 
-
+from poetry_reader import (
+    SAMPLE_POETRY_FORM_FILE, EXPECTED_POETRY_FORMS, SAMPLE_DICTIONARY_FILE,
+    EXPECTED_DICTIONARY, SAMPLE_POEM_FILE, read_and_trim_whitespace, 
+    read_pronouncing_dictionary, read_poetry_form_descriptions,
+    read_poetry_form_description 
+)
 # ===================== Helper Functions =====================
 
 
@@ -94,8 +99,14 @@ def extract_phonemes(
     >>> extract_phonemes([['YES'], ['NO', 'YES']], word_to_phonemes)
     [[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]]
     """
-    pass
-
+    
+    poem_of_phonemes = []
+    for line in cleaned_poem:
+        line_of_phonemes = []
+        for word in line:
+            line_of_phonemes.append(word_to_phonemes[word])
+        poem_of_phonemes.append(line_of_phonemes)
+    return poem_of_phonemes
 
 def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
     """Return a string containing all the phonemes in each word in each line in
@@ -105,7 +116,7 @@ def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
     >>> phonemes_to_str([[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]])
     'Y EH1 S\\nN OW1 | Y EH1 S'
     """
-    pass
+    
 
 
 def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
