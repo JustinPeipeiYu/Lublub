@@ -135,20 +135,19 @@ def get_common_last_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> Dict[st
     {'IH': [1, 2]}
     """
     
-    line_number = 1
+    line_number = 0
     syllables_to_rhyme = {}
     for line in poem_pronunciation:
         syllable_counter = -1
-        possible_last_syllable = line[-1][syllable_counter]
-        while not possible_last_syllable[-1] in '123456789':
+        last_syllable = line[-1][syllable_counter]
+        while not last_syllable[-1] in '1234567890':
             syllable_counter -= 1
-            possible_last_syllable = line[-1][syllable_counter]
-        last_syllable = possible_last_syllable[:-1]
-        if not last_syllable in syllables_to_rhyme:
-            syllables_to_rhyme[last_syllable] = [line_number]
-        else:
-            syllables_to_rhyme[last_syllable].append(line_number)
+            last_syllable = line[-1][syllable_counter]
         line_number += 1
+        if not last_syllable[:-1] in syllables_to_rhyme:
+            syllables_to_rhyme[last_syllable[:-1]] = [line_number]
+        else:
+            syllables_to_rhyme[last_syllable[:-1]].append(line_number)    
     return syllables_to_rhyme    
 
 def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
