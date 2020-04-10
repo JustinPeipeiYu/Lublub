@@ -127,6 +127,30 @@ def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
         poem_joined.append(one_list)
     return "\n".join(poem_joined)
 
+def get_common_last_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> Dict[str, List[int]]:
+    """Return a dictionary of syllables as the keys with values as a list of all the line numbers
+    that share that common syllable as the last syllable.
+    
+    >>> get_common_last_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']]])
+    {'IH': [1, 2]}
+    """
+    
+    line_number = 1
+    syllables_to_rhyme = {}
+    for line in poem_pronunciation:
+        syllable_counter = -1
+        possible_last_syllable = line[-1][syllable_counter]
+        while not possible_last_syllable[-1] in '123456789':
+            syllable_counter -= 1
+            possible_last_syllable = line[-1][syllable_counter]
+        last_syllable = possible_last_syllable[:-1]
+        if not last_syllable in syllables_to_rhyme:
+            syllables_to_rhyme[last_syllable] = [line_number]
+        else:
+            syllables_to_rhyme[last_syllable].append(line_number)
+        line_number += 1
+    return syllables_to_rhyme    
+
 def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
     """Return a list of last syllables from the poem described by
     poem_pronunction.
@@ -138,16 +162,6 @@ def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
     ['A', 'A']
     """
     
-    syllable_counter = -1
-    alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-    syllables_to_rhyme = {}
-    for line in poem_pronunciation:
-        possible_last_syllable = line[-1][syllable_counter]
-        while not possible_last_syllable[-1] in '123456789':
-            syllable_counter -= 1
-            possible_last_syllable = line[-1][syllable_counter]
-        
-
 
 def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
     """Return a list of the number of syllables in each poem_pronunciation
