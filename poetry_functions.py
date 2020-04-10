@@ -150,6 +150,25 @@ def get_common_last_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> Dict[st
             syllables_to_rhyme[last_syllable[:-1]].append(line_number)    
     return syllables_to_rhyme    
 
+def get_common_rhymes(common_syllables: Dict[str, List[int]]) -> Dict[str, List[int]]:
+    """Return a dictionary with rhyme letters as keys and the values are
+    all the lines with that common rhyme letter.
+    
+    >>> get_common_rhymes({'IH': [1, 2])
+    {'A': [1,2]}
+    >>> get_common_rhymes({'IH': [1, 2], 'AH': [3,4]})
+    {'A': [1,2], 'B':[3,4]}
+    """
+    
+    rhymes_and_lines = {}
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    syllables = []
+    for key in common_syllables:
+        syllables.append(key)  
+    for i in range(len(syllables)):
+        rhymes_and_lines[alphabet[i]] = common_syllables[syllables[i]]
+    return rhymes_and_lines
+        
 def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
     """Return a list of last syllables from the poem described by
     poem_pronunction.
