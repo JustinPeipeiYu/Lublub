@@ -178,8 +178,21 @@ def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
 
     >>> get_rhyme_scheme([[['IH0', 'N']], [['S', 'IH0', 'N']]])
     ['A', 'A']
+    >>> get_rhyme_scheme([[['IH0', 'N']], [['S', 'IH0', 'N']], [['T','AH0']], [['H', 'AH0']]])
+    ['A', 'A', 'B', 'B']
     """
     
+    rhymes_with_lines = get_common_rhymes(get_common_last_syllables(poem_pronunciation))
+    rhyme_letter_keys = []
+    output = []
+    for key in rhymes_with_lines:
+        rhyme_letter_keys.append(key)
+    for i in range(len(poem_pronunciation)):
+        for key in rhyme_letter_keys:
+            for line in rhymes_with_lines[key]:
+                if (i + 1) == line:
+                    output.append(key)
+    return output
 
 def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
     """Return a list of the number of syllables in each poem_pronunciation
