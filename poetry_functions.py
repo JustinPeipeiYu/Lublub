@@ -114,10 +114,18 @@ def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
     separated by ' | ', and the lines are separated by '\n'.
 
     >>> phonemes_to_str([[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]])
-    'Y EH1 S\\nN OW1 | Y EH1 S'
+    'Y EH1 S\nN OW1 | Y EH1 S'
     """
     
-
+    poem_joined = []
+    for line in poem_pronunciation:
+        list_of_word_joined = []
+        for word in line:
+            word_joined = " ".join(word)
+            list_of_word_joined.append(word_joined)
+        one_list = " | ".join(list_of_word_joined)
+        poem_joined.append(one_list)
+    return "\n".join(poem_joined)
 
 def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
     """Return a list of last syllables from the poem described by
@@ -129,7 +137,16 @@ def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
     >>> get_rhyme_scheme([[['IH0', 'N']], [['S', 'IH0', 'N']]])
     ['A', 'A']
     """
-    pass
+    
+    syllable_counter = -1
+    alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    syllables_to_rhyme = {}
+    for line in poem_pronunciation:
+        possible_last_syllable = line[-1][syllable_counter]
+        while not possible_last_syllable[-1] in '123456789':
+            syllable_counter -= 1
+            possible_last_syllable = line[-1][syllable_counter]
+        
 
 
 def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
