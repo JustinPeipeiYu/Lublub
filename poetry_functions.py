@@ -197,8 +197,22 @@ def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
 def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
     """Return a list of the number of syllables in each poem_pronunciation
     line.
+    
+    >>> get_num_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']]])
+    [1,1]
+    >>> get_num_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']], [['T','AH0'], ['H', 'AH0']]])
+    [1,1,2]
     """
-    pass
+    
+    syllables_for_lines = []
+    for line in poem_pronunciation:
+        number_of_syllables = 0
+        for word in line:
+            for phoneme in word:
+                if phoneme[-1] in '0123456789':
+                    number_of_syllables += 1
+        syllables_for_lines.append(number_of_syllables)
+    return syllables_for_lines
 
 '''
 if __name__ == '__main__':
