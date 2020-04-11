@@ -95,6 +95,7 @@ def read_poetry_form_descriptions(
     poem_forms = {}
     rhyming_lst = []
     syllabic_lst = []
+    key = ""
     poems = poetry_forms_file.readlines()
     for line in poems:
         if line != poems[-1]:
