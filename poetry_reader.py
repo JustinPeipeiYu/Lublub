@@ -20,6 +20,7 @@ Haiku
 7 * 
 5 *
 '''
+
 EXPECTED_POETRY_FORMS = {
     'Haiku': ([5, 7, 5], ['*', '*', '*']),
     'Limerick': ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'])
@@ -50,7 +51,7 @@ def read_and_trim_whitespace(poem_file: TextIO) -> str:
     >>> import io
     >>> poem_file = io.StringIO(SAMPLE_POEM_FILE)
     >>> read_and_trim_whitespace(poem_file)
-    'Is this mic on?\n\nGet off my lawn.'
+    'Is this mic on?\\n\\nGet off my lawn.'
     """
     
     poem = ""
@@ -125,3 +126,8 @@ def read_poetry_form_description(
     components = line.split()
     components[0] = ((int)(components[0]))
     return components
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod()
