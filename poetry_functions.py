@@ -59,8 +59,8 @@ def break_apart_by_space(non_empty_lines: List[str]) -> List[List[str]]:
     """Return a list of the lines broken apart by spaces to create a list 
     of words for each line.
     
-    >>> break_apart_by_space(['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.'])
-    [['The', 'first', 'line', 'leads', 'off,'], ['With', 'a', 'gap', 'before', 'the', 'next.'], ['     Then', 'the', 'poem', 'ends.']]
+    >>> break_apart_by_space(['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.   '])
+    [['The', 'first', 'line', 'leads', 'off,'], ['With', 'a', 'gap', 'before', 'the', 'next.'], ['Then', 'the', 'poem', 'ends.']]
     """
     
     lists_of_words = []
