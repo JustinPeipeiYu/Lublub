@@ -154,10 +154,10 @@ def get_common_rhymes(common_syllables: Dict[str, List[int]]) -> Dict[str, List[
     """Return a dictionary with rhyme letters as keys and the values are
     all the lines with that common rhyme letter.
     
-    >>> get_common_rhymes({'IH': [1, 2])
-    {'A': [1,2]}
+    >>> get_common_rhymes({'IH': [1, 2]})
+    {'A': [1, 2]}
     >>> get_common_rhymes({'IH': [1, 2], 'AH': [3,4]})
-    {'A': [1,2], 'B':[3,4]}
+    {'A': [1, 2], 'B': [3, 4]}
     """
     
     rhymes_and_lines = {}
