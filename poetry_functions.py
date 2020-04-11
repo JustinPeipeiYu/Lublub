@@ -72,7 +72,7 @@ def clean_poem(raw_poem: str) -> CLEAN_POEM:
     """Return the non-blank, non-empty lines of poem, with whitespace removed
     from the beginning and end of each line and all words capitalized.
 
-    >>> clean_poem('The first line leads off,\n\n\nWith a gap before the next.\n    Then the poem ends.\n')
+    >>> clean_poem('The first line leads off,\\n\\n\\nWith a gap before the next.\\n    Then the poem ends.\\n')
     [['THE', 'FIRST', 'LINE', 'LEADS', 'OFF'], ['WITH', 'A', 'GAP', 'BEFORE', 'THE', 'NEXT'], ['THEN', 'THE', 'POEM', 'ENDS']]
     """
     
