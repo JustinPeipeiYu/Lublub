@@ -125,7 +125,7 @@ def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
             list_of_words.append(word_joined)
         one_line = " | ".join(list_of_words)
         poem_joined.append(one_line)
-    return "\\n".join(poem_joined)
+    return "\n".join(poem_joined)
 
 def get_common_last_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> Dict[str, List[int]]:
     """Return a dictionary of syllables as the keys with values as a list of all the line numbers
