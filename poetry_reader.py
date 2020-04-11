@@ -100,7 +100,7 @@ def read_poetry_form_descriptions(
         if line != poems[-1]:
             if line.strip().isalpha():
                 key = line.strip()
-            elif not line.strip().isalpha() and not line in ["\n","\t"]:    
+            elif not line.strip().isalpha() and not line in ["\n", "\t"]:    
                 lst = read_poetry_form_description(line.strip())
                 rhyming_lst.append(lst[1])
                 syllabic_lst.append(lst[0])
