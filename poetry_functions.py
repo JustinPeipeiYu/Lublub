@@ -37,8 +37,8 @@ def clean_word(s: str) -> str:
 def split_by_newline(raw_poem: str) -> List[str]:
     """Return a list of the lines seperated by new line characters.
     
-    >>> split_by_newline('The first line leads off,\n\n\nWith a gap before the next.\n    Then the poem ends.\n')
-    ['The first line leads off,', '', '', 'With a gap before the next.', '     Then the poem ends.', '']
+    >>> split_by_newline('The first line leads off,\\n\\n\\nWith a gap before the next.\\n    Then the poem ends.\\n')
+    ['The first line leads off,', '', '', 'With a gap before the next.', '    Then the poem ends.', '']
     """
     lines = raw_poem.split("\n")
     return lines
