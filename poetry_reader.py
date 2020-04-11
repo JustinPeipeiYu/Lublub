@@ -14,7 +14,6 @@ SAMPLE_POETRY_FORM_FILE = '''Limerick
 5 B
 5 B
 8 A
-
 Haiku
 5 *
 7 * 
@@ -47,7 +46,6 @@ Get off my lawn.
 def read_and_trim_whitespace(poem_file: TextIO) -> str:
     """Return a string containing the poem in poem_file, with
     blank lines and leading and trailing whitespace removed.
-
     >>> import io
     >>> poem_file = io.StringIO(SAMPLE_POEM_FILE)
     >>> read_and_trim_whitespace(poem_file)
@@ -64,7 +62,6 @@ def read_pronouncing_dictionary(
         pronunciation_file: TextIO) -> PRONOUNCING_DICTIONARY:
     """Read pronunciation_file, which is in the format of the CMU Pronouncing
     Dictionary, and return the pronunciation dictionary.
-
     >>> import io
     >>> dict_file = io.StringIO(SAMPLE_DICTIONARY_FILE)
     >>> result = read_pronouncing_dictionary(dict_file)
@@ -84,7 +81,6 @@ def read_poetry_form_descriptions(
         poetry_forms_file: TextIO) -> POETRY_FORMS:
     """Return a dictionary of poetry form name to poetry pattern for the poetry
     forms in poetry_forms_file.
-
     >>> import io
     >>> form_file = io.StringIO(SAMPLE_POETRY_FORM_FILE)
     >>> result = read_poetry_form_descriptions(form_file)
@@ -107,6 +103,7 @@ def read_poetry_form_descriptions(
                 syllabic_lst.append(lst[0])
             else:
                 poem_forms[key] = (syllabic_lst, rhyming_lst)
+                print(poem_forms)
                 rhyming_lst = []
                 syllabic_lst = []  
         else:
