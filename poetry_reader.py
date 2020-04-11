@@ -73,7 +73,7 @@ def read_pronouncing_dictionary(
     """
     pronouncing_dictionary = {}
     for line in pronunciation_file.readlines():
-        if not ";;;" in line and not line in ['\n','\t']:
+        if not ";;;" in line and not line in ['\n', '\t']:
             components = line.split()
             first_element = components[0]
             components.remove(first_element)
@@ -120,7 +120,7 @@ def read_poetry_form_description(
     """Return a list of the rhyme and syllabic pattern for a line of poetry.
     
     >>> read_poetry_form_description("8 A")
-    [8, "A"]
+    [8, 'A']
     """
     
     components = line.split()
