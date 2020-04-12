@@ -2,6 +2,7 @@
 """
 from typing import TextIO
 from typing import List
+from typing import Tuple
 
 
 from poetry_constants import (
@@ -89,43 +90,48 @@ def read_poetry_form_descriptions(
     """
     
     poem_forms = {}
-    rhyming_lst = []
-    syllabic_lst = []
+    
     key = ""
     poems = poetry_forms_file.readlines()
     for line in poems:
         if line != poems[-1]:
             if line.strip().isalpha():
+                if line != poems[0]: 
+                    poem_forms[key] = (syllabic_lst, rhyming_lst)
+                    rhyming_lst = []
+                    syllabic_lst = []                      
                 key = line.strip()
             elif not line.strip().isalpha() and not line in ["\n", "\t"]:    
                 lst = read_poetry_form_description(line.strip())
-                rhyming_lst.append(lst[1])
-                syllabic_lst.append(lst[0])
-            else:
-                poem_forms[key] = (syllabic_lst, rhyming_lst)
-                print(poem_forms)
-                rhyming_lst = []
-                syllabic_lst = []  
+                
         else:
             lst = read_poetry_form_description(line.strip())
             rhyming_lst.append(lst[1])
             syllabic_lst.append(lst[0])
             poem_forms[key] = (syllabic_lst, rhyming_lst)
     return poem_forms   
-    
-def read_poetry_form_description( 
-        line: str) -> List[str]:
+
+def read_a_poetry_form_description(
+        poems: List[str], line_number: int) -> Tuple[List[int], List[str]]:
     """Return a list of the rhyme and syllabic pattern for a line of poetry.
     
-    >>> read_poetry_form_description("8 A")
-    [8, 'A']
+    >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 1)
+    ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'])
     """
     
-    components = line.split()
-    components[0] = ((int)(components[0]))
-    return components
+    rhyming_lst = []
+    syllabic_lst = []
+    while not poems[line_number].strip().isalpha(): 
+        components = poems[line_number].strip().split()
+        components[0] = ((int)(components[0]))
+        rhyming_lst.append(components[1])
+        syllabic_lst.append(components[0])
+        line_number += 1
+    return (syllabic_lst, rhyming_lst)
 
+"""
 if __name__ == '__main__':
     import doctest
 
     doctest.testmod()
+"""
