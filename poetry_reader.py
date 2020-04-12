@@ -15,6 +15,7 @@ SAMPLE_POETRY_FORM_FILE = '''Limerick
 5 B
 5 B
 8 A
+
 Haiku
 5 *
 7 * 
@@ -90,44 +91,48 @@ def read_poetry_form_descriptions(
     """
     
     poem_forms = {}
-    
+    line_number = 0
     key = ""
     poems = poetry_forms_file.readlines()
-    for line in poems:
-        if line != poems[-1]:
-            if line.strip().isalpha():
-                if line != poems[0]: 
-                    poem_forms[key] = (syllabic_lst, rhyming_lst)
-                    rhyming_lst = []
-                    syllabic_lst = []                      
-                key = line.strip()
-            elif not line.strip().isalpha() and not line in ["\n", "\t"]:    
-                lst = read_poetry_form_description(line.strip())
-                
-        else:
-            lst = read_poetry_form_description(line.strip())
-            rhyming_lst.append(lst[1])
-            syllabic_lst.append(lst[0])
-            poem_forms[key] = (syllabic_lst, rhyming_lst)
+    a_poem_form = ()
+    while line_number < len(poems):
+        if poems[line_number].strip().isalpha():
+            key = poems[line_number].strip()
+            if line_number != 0:
+                poem_forms[key] = a_poem_form
+                print("line_number != 0")
+            else:
+                line_number += 1
+                print("else:")
+            print(line_number)
+        elif not poems[line_number].strip().isalpha() and poems[line_number] != "\n": 
+            print("OK " + str(line_number))
+            a_poem_form, line_number = read_a_poetry_form_description(poems, line_number)
+            print("Not OK:")
+            if line_number == len(poems):
+                poem_forms[key] = a_poem_form
     return poem_forms   
 
 def read_a_poetry_form_description(
-        poems: List[str], line_number: int) -> Tuple[List[int], List[str]]:
+        poems: List[str], line_number: int) -> (Tuple[List[int], List[str]], int):
     """Return a list of the rhyme and syllabic pattern for a line of poetry.
     
     >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 1)
-    ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'])
+    ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'], 6)
+    >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 7)
+    ([5, 7, 5], ['*', '*', '*'], 10)
     """
     
     rhyming_lst = []
     syllabic_lst = []
-    while not poems[line_number].strip().isalpha(): 
+    while (line_number < len(poems) and not poems[line_number].strip().isalpha() and 
+            poems[line_number] != "\n"): 
         components = poems[line_number].strip().split()
         components[0] = ((int)(components[0]))
         rhyming_lst.append(components[1])
         syllabic_lst.append(components[0])
         line_number += 1
-    return (syllabic_lst, rhyming_lst)
+    return (syllabic_lst, rhyming_lst), line_number
 
 """
 if __name__ == '__main__':
