@@ -22,9 +22,28 @@ Haiku
 5 *
 '''
 
+SAMPLE_POETRY_FORM_FILE_2 = '''Haiku
+5 *
+7 * 
+5 *
+
+Limerick
+8 A
+8 A
+5 B
+5 B
+8 A
+'''
+
+
 EXPECTED_POETRY_FORMS = {
     'Limerick': ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A']),
     'Haiku': ([5, 7, 5], ['*', '*', '*'])
+}
+
+EXPECTED_POETRY_FORMS_2 = {
+    'Haiku': ([5, 7, 5], ['*', '*', '*']),
+    'Limerick': ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'])
 }
 
 SAMPLE_DICTIONARY_FILE = ''';;; Comment line
@@ -32,6 +51,18 @@ ABSINTHE  AE1 B S IH0 N TH
 HEART  HH AA1 R T
 FONDER  F AA1 N D ER0
 '''
+
+SAMPLE_DICTIONARY_FILE_2 = ''';;; Comment line
+HEART  HH AA1 R T
+FONDER  F AA1 N D ER0
+ABSINTHE  AE1 B S IH0 N TH
+'''
+
+EXPECTED_DICTIONARY_2 = {
+    'HEART': ['HH', 'AA1', 'R', 'T', ],
+    'FONDER': ['F', 'AA1', 'N', 'D', 'ER0'],
+    'ABSINTHE': ['AE1', 'B', 'S', 'IH0', 'N', 'TH']
+}
 
 EXPECTED_DICTIONARY = {
     'ABSINTHE': ['AE1', 'B', 'S', 'IH0', 'N', 'TH'],
@@ -44,6 +75,10 @@ SAMPLE_POEM_FILE = '''  Is this mic on?
 Get off my lawn.
 '''
 
+SAMPLE_POEM_FILE_2 = ''' Hey you my name is Joe.
+
+I heard my name on the radio.
+'''
 
 def read_and_trim_whitespace(poem_file: TextIO) -> str:
     """Return a string containing the poem in poem_file, with
@@ -52,8 +87,13 @@ def read_and_trim_whitespace(poem_file: TextIO) -> str:
     >>> poem_file = io.StringIO(SAMPLE_POEM_FILE)
     >>> read_and_trim_whitespace(poem_file)
     'Is this mic on?\\n\\nGet off my lawn.'
-    """
+    >>> import io
+    >>> poem_file_2 = io.StringIO(SAMPLE_POEM_FILE_2)
+    >>> read_and_trim_whitespace(poem_file_2)
+    'Hey you my name is Joe.\\n\\nI heard my name on the radio.'
     
+    Precondition: The poem file must contain each new idea on a new line.
+    """
     poem = ""
     for line in poem_file.readlines():
         poem += line.strip() + "\n"
@@ -69,10 +109,20 @@ def read_pronouncing_dictionary(
     >>> result = read_pronouncing_dictionary(dict_file)
     >>> result == EXPECTED_DICTIONARY
     True
+    >>> import io
+    >>> dict_file_2 = io.StringIO(SAMPLE_DICTIONARY_FILE_2)
+    >>> result = read_pronouncing_dictionary(dict_file_2)
+    >>> result == EXPECTED_DICTIONARY_2
+    True
+    
+    Precondition: The pronunciation file has the first line commented followed
+    by every subsequent line starting with a capitalized word and followed by 
+    capitalized phonemes of that word with every phoneme seperated by 
+    a space and words seperated by new line characters
     """
     pronouncing_dictionary = {}
     for line in pronunciation_file.readlines():
-        if not ";;;" in line and not line in ['\n', '\t']:
+        if not ";;;" in line and not line in '\n':
             components = line.split()
             first_element = components[0]
             components.remove(first_element)
@@ -88,6 +138,16 @@ def read_poetry_form_descriptions(
     >>> result = read_poetry_form_descriptions(form_file)
     >>> result == EXPECTED_POETRY_FORMS
     True
+    >>> import io
+    >>> form_file_2 = io.StringIO(SAMPLE_POETRY_FORM_FILE_2)
+    >>> result = read_poetry_form_descriptions(form_file_2)
+    >>> result == EXPECTED_POETRY_FORMS_2
+    True
+    
+    Precondition: The poetry form file must start with the name of the type of
+    poem on line one, followed by each line composition which starts with a 
+    number of syllables and ends with a rhyming scheme seperated by a space.
+    Each poem form is seperated by a blank line.
     """
     
     poem_forms = {}
@@ -113,9 +173,14 @@ def read_a_poetry_form_description(
     """Return a list of the rhyme and syllabic pattern for a line of poetry.
     
     >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 1)
-    ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'], 6)
+    (([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A']), 6)
     >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 7)
-    ([5, 7, 5], ['*', '*', '*'], 10)
+    (([5, 7, 5], ['*', '*', '*']), 10)
+    
+    Precondition: The list of poem forms must follow the order indicated in above
+    function, with each element including a newline character as a seperate element
+    in the list. The line number must be less than the length of the list of poem
+    forms.
     """
     
     rhyming_lst = []
@@ -129,9 +194,8 @@ def read_a_poetry_form_description(
         line_number += 1
     return (syllabic_lst, rhyming_lst), line_number
 
-"""
+
 if __name__ == '__main__':
     import doctest
 
     doctest.testmod()
-"""
