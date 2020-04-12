@@ -23,8 +23,8 @@ Haiku
 '''
 
 EXPECTED_POETRY_FORMS = {
-    'Haiku': ([5, 7, 5], ['*', '*', '*']),
-    'Limerick': ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A'])
+    'Limerick': ([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A']),
+    'Haiku': ([5, 7, 5], ['*', '*', '*'])
 }
 
 SAMPLE_DICTIONARY_FILE = ''';;; Comment line
@@ -98,19 +98,14 @@ def read_poetry_form_descriptions(
     while line_number < len(poems):
         if poems[line_number].strip().isalpha():
             key = poems[line_number].strip()
-            if line_number != 0:
-                poem_forms[key] = a_poem_form
-                print("line_number != 0")
-            else:
-                line_number += 1
-                print("else:")
-            print(line_number)
+            line_number += 1
         elif not poems[line_number].strip().isalpha() and poems[line_number] != "\n": 
-            print("OK " + str(line_number))
             a_poem_form, line_number = read_a_poetry_form_description(poems, line_number)
-            print("Not OK:")
             if line_number == len(poems):
                 poem_forms[key] = a_poem_form
+        else:
+            poem_forms[key] = a_poem_form
+            line_number += 1
     return poem_forms   
 
 def read_a_poetry_form_description(
