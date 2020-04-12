@@ -185,8 +185,8 @@ def read_a_poetry_form_description(
     
     rhyming_lst = []
     syllabic_lst = []
-    while (line_number < len(poems) and not poems[line_number].strip().isalpha() and 
-            poems[line_number] != "\n"): 
+    while (line_number < len(poems) and not poems[line_number].strip().isalpha() 
+           and poems[line_number] != "\n"): 
         components = poems[line_number].strip().split()
         components[0] = ((int)(components[0]))
         rhyming_lst.append(components[1])
