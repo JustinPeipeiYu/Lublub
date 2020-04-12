@@ -133,7 +133,7 @@ def get_common_last_syllables(
     the line numbers that share that common syllable as the last syllable.
     
     >>> get_common_last_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']]])
-    {'IH': [1, 2]}
+    {'IHN': [1, 2]}
     """
     
     line_number = 0
@@ -145,10 +145,14 @@ def get_common_last_syllables(
             syllable_counter -= 1
             last_syllable = line[-1][syllable_counter]
         line_number += 1
-        if not last_syllable[:-1] in syllables_to_rhyme:
-            syllables_to_rhyme[last_syllable[:-1]] = [line_number]
+        if syllable_counter != -1:
+            ending_phoneme = last_syllable[:-1] + line[-1][-1]
         else:
-            syllables_to_rhyme[last_syllable[:-1]].append(line_number)    
+            ending_phoneme = last_syllable[:-1]
+        if not ending_phoneme in syllables_to_rhyme:
+            syllables_to_rhyme[ending_phoneme] = [line_number]
+        else:
+            syllables_to_rhyme[ending_phoneme].append(line_number)    
     return syllables_to_rhyme    
 
 def get_common_rhymes(
