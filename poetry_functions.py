@@ -57,6 +57,8 @@ def remove_empty_lines(lines: List[str]) -> List[str]:
     ['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.']
     >>> remove_empty_lines(['I am Fred.', 'I am twelve years old.', '', 'Sincerely,', '', 'Fred'])
     ['I am Fred.', 'I am twelve years old.', 'Sincerely,', 'Fred']
+    
+    Precondition: The list contains only strings and empty strings.
     """
     non_empty_lines = []
     for line in lines:
@@ -70,6 +72,10 @@ def break_apart_by_space(non_empty_lines: List[str]) -> List[List[str]]:
     
     >>> break_apart_by_space(['The first line leads off,', 'With a gap before the next.', '     Then the poem ends.   '])
     [['The', 'first', 'line', 'leads', 'off,'], ['With', 'a', 'gap', 'before', 'the', 'next.'], ['Then', 'the', 'poem', 'ends.']]
+    >>> break_apart_by_space(['I am Fred.', 'I am twelve years old.', 'Sincerely,', 'Fred'])
+    [['I', 'am', 'Fred.'], ['I', 'am', 'twelve', 'years', 'old.'], ['Sincerely,'], ['Fred']]
+    
+    Precondition: The list contains all non-empty strings.
     """
     
     lists_of_words = []
