@@ -140,6 +140,10 @@ def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
 
     >>> phonemes_to_str([[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]])
     'Y EH1 S\\nN OW1 | Y EH1 S'
+    >>> phonemes_to_str([[['HH', 'AY1']], [['HH', 'AY1'], ['B', 'AY1']]])
+    'HH AY1\\nHH AY1 | B AY1'
+    
+    Precondition: There is at least one word/phoneme/line in poem pronunciation list.
     """
     
     poem_joined = []
@@ -159,6 +163,10 @@ def get_common_last_syllables(
     
     >>> get_common_last_syllables([[['IH0', 'N']], [['S', 'IH0', 'N']]])
     {'IHN': [1, 2]}
+    >>> get_common_last_syllables([[['HH', 'AY1']], [['B', 'AY1']]])
+    {'AY': [1, 2]}
+    
+    Precondition: There is at least one line/word/phoneme in poem_pronunciation.
     """
     
     line_number = 0
