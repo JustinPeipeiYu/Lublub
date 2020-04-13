@@ -27,6 +27,9 @@ def clean_word(s: str) -> str:
     'BIRTHDAY'
     >>> clean_word('  "Quoted?"\\n\\n\\n')
     'QUOTED'
+    
+    Precondition: s should not contain digits, or any unnecessary punctuation
+    internal to the word.
     """
 
     punctuation = """!"'`@$%^&_-+={}|\\/,;:.-?)([]<>*#\n\t\r """
@@ -39,6 +42,10 @@ def split_by_newline(raw_poem: str) -> List[str]:
     
     >>> split_by_newline('The first line leads off,\\n\\n\\nWith a gap before the next.\\n    Then the poem ends.\\n')
     ['The first line leads off,', '', '', 'With a gap before the next.', '    Then the poem ends.', '']
+    >>> split_by_newline('I am Fred.\\nI am twelve years old.\\n\\nSincerely,\\n\\nFred')
+    ['I am Fred.', 'I am twelve years old.', '', 'Sincerely,', '', 'Fred']
+    
+    Precondition: raw_poem contains lines seperated only by newline characters.
     """
     lines = raw_poem.split("\n")
     return lines
