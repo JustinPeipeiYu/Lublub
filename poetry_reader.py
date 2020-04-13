@@ -83,6 +83,9 @@ I heard my name on the radio.
 def read_and_trim_whitespace(poem_file: TextIO) -> str:
     """Return a string containing the poem in poem_file, with
     blank lines and leading and trailing whitespace removed.
+    
+    Precondition: The poem file must contain each new idea on a new line.
+    
     >>> import io
     >>> poem_file = io.StringIO(SAMPLE_POEM_FILE)
     >>> read_and_trim_whitespace(poem_file)
@@ -91,9 +94,8 @@ def read_and_trim_whitespace(poem_file: TextIO) -> str:
     >>> poem_file_2 = io.StringIO(SAMPLE_POEM_FILE_2)
     >>> read_and_trim_whitespace(poem_file_2)
     'Hey you my name is Joe.\\n\\nI heard my name on the radio.'
-    
-    Precondition: The poem file must contain each new idea on a new line.
     """
+    
     poem = ""
     for line in poem_file.readlines():
         poem += line.strip() + "\n"
@@ -104,6 +106,12 @@ def read_pronouncing_dictionary(
         pronunciation_file: TextIO) -> PRONOUNCING_DICTIONARY:
     """Read pronunciation_file, which is in the format of the CMU Pronouncing
     Dictionary, and return the pronunciation dictionary.
+    
+    Precondition: The pronunciation file has the first line commented followed
+    by every subsequent line starting with a capitalized word and followed by 
+    capitalized phonemes of that word with every phoneme seperated by 
+    a space and words seperated by new line characters
+    
     >>> import io
     >>> dict_file = io.StringIO(SAMPLE_DICTIONARY_FILE)
     >>> result = read_pronouncing_dictionary(dict_file)
@@ -114,12 +122,8 @@ def read_pronouncing_dictionary(
     >>> result = read_pronouncing_dictionary(dict_file_2)
     >>> result == EXPECTED_DICTIONARY_2
     True
-    
-    Precondition: The pronunciation file has the first line commented followed
-    by every subsequent line starting with a capitalized word and followed by 
-    capitalized phonemes of that word with every phoneme seperated by 
-    a space and words seperated by new line characters
     """
+    
     pronouncing_dictionary = {}
     for line in pronunciation_file.readlines():
         if not ";;;" in line and not line in '\n':
@@ -133,6 +137,12 @@ def read_poetry_form_descriptions(
         poetry_forms_file: TextIO) -> POETRY_FORMS:
     """Return a dictionary of poetry form name to poetry pattern for the poetry
     forms in poetry_forms_file.
+    
+    Precondition: The poetry form file must start with the name of the type of
+    poem on line one, followed by each line composition which starts with a 
+    number of syllables and ends with a rhyming scheme seperated by a space.
+    Each poem form is seperated by a blank line.
+    
     >>> import io
     >>> form_file = io.StringIO(SAMPLE_POETRY_FORM_FILE)
     >>> result = read_poetry_form_descriptions(form_file)
@@ -143,11 +153,6 @@ def read_poetry_form_descriptions(
     >>> result = read_poetry_form_descriptions(form_file_2)
     >>> result == EXPECTED_POETRY_FORMS_2
     True
-    
-    Precondition: The poetry form file must start with the name of the type of
-    poem on line one, followed by each line composition which starts with a 
-    number of syllables and ends with a rhyming scheme seperated by a space.
-    Each poem form is seperated by a blank line.
     """
     
     poem_forms = {}
@@ -175,17 +180,17 @@ def read_a_poetry_form_description(
                                                 int):
     """Return a list of the rhyme and syllabic pattern for a line of poetry.
     
+    Precondition: The list of poem forms must follow the order indicated in 
+    above function, with each element including a newline character as a 
+    seperate element in the list. The line number must be less than the length 
+    of the list of poem forms.
+    
     >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', \
     '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 1)
     (([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A']), 6)
     >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', \
     '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 7)
     (([5, 7, 5], ['*', '*', '*']), 10)
-    
-    Precondition: The list of poem forms must follow the order indicated in 
-    above function, with each element including a newline character as a 
-    seperate element in the list. The line number must be less than the length 
-    of the list of poem forms.
     """
     
     rhyming_lst = []
