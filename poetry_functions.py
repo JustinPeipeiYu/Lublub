@@ -9,12 +9,6 @@ from poetry_constants import (
     CLEAN_POEM, WORD_PHONEMES, LINE_PRONUNCIATION, POEM_PRONUNCIATION,
     PRONOUNCING_DICTIONARY)
 
-from poetry_reader import (
-    SAMPLE_POETRY_FORM_FILE, EXPECTED_POETRY_FORMS, SAMPLE_DICTIONARY_FILE,
-    EXPECTED_DICTIONARY, SAMPLE_POEM_FILE, read_and_trim_whitespace, 
-    read_pronouncing_dictionary, read_poetry_form_descriptions,
-    read_a_poetry_form_description 
-)
 # ===================== Helper Functions =====================
 
 
