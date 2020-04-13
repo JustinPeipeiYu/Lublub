@@ -159,8 +159,10 @@ def read_poetry_form_descriptions(
         if poems[line_number].strip().isalpha():
             key = poems[line_number].strip()
             line_number += 1
-        elif not poems[line_number].strip().isalpha() and poems[line_number] != "\n": 
-            a_poem_form, line_number = read_a_poetry_form_description(poems, line_number)
+        elif not poems[line_number].strip().isalpha() and \
+             poems[line_number] != "\n": 
+            a_poem_form, \
+                line_number = read_a_poetry_form_description(poems, line_number)
             if line_number == len(poems):
                 poem_forms[key] = a_poem_form
         else:
@@ -169,18 +171,21 @@ def read_poetry_form_descriptions(
     return poem_forms   
 
 def read_a_poetry_form_description(
-        poems: List[str], line_number: int) -> (Tuple[List[int], List[str]], int):
+        poems: List[str], line_number: int) -> (Tuple[List[int], List[str]], \
+                                                int):
     """Return a list of the rhyme and syllabic pattern for a line of poetry.
     
-    >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 1)
+    >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', \
+    '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 1)
     (([8, 8, 5, 5, 8], ['A', 'A', 'B', 'B', 'A']), 6)
-    >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 7)
+    >>> read_a_poetry_form_description(['Limerick', '8 A', '8 A', '5 B', \
+    '5 B', '8 A', 'Haiku', '5 *', '7 *', '5 *'], 7)
     (([5, 7, 5], ['*', '*', '*']), 10)
     
-    Precondition: The list of poem forms must follow the order indicated in above
-    function, with each element including a newline character as a seperate element
-    in the list. The line number must be less than the length of the list of poem
-    forms.
+    Precondition: The list of poem forms must follow the order indicated in 
+    above function, with each element including a newline character as a 
+    seperate element in the list. The line number must be less than the length 
+    of the list of poem forms.
     """
     
     rhyming_lst = []
