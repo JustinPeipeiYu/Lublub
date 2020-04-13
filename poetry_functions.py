@@ -117,6 +117,12 @@ def extract_phonemes(
     >>> word_to_phonemes = {'YES': ['Y', 'EH1', 'S'], 'NO': ['N', 'OW1']}
     >>> extract_phonemes([['YES'], ['NO', 'YES']], word_to_phonemes)
     [[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]]
+    >>> word_to_phonemes = {'HI': ['HH', 'AY1'], 'BYE': ['B', 'AY1']}
+    >>> extract_phonemes([['HI'], ['HI', 'BYE']], word_to_phonemes)
+    [[['HH', 'AY1']], [['HH', 'AY1'], ['B', 'AY1']]]
+    
+    Precondition: Each word in the cleaned poem is a key in the word to 
+    phoneme dictionary.
     """
     
     poem_of_phonemes = []
