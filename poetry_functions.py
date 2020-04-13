@@ -89,6 +89,10 @@ def clean_poem(raw_poem: str) -> CLEAN_POEM:
 
     >>> clean_poem('The first line leads off,\\n\\n\\nWith a gap before the next.\\n    Then the poem ends.\\n')
     [['THE', 'FIRST', 'LINE', 'LEADS', 'OFF'], ['WITH', 'A', 'GAP', 'BEFORE', 'THE', 'NEXT'], ['THEN', 'THE', 'POEM', 'ENDS']]
+    >>> clean_poem('I am Fred.\\nI am twelve years old.\\n\\nSincerely,\\n\\nFred')
+    [['I', 'AM', 'FRED'], ['I', 'AM', 'TWELVE', 'YEARS', 'OLD'], ['SINCERELY'], ['FRED']]
+    
+    Precondition: The raw poem has to have lines seperated by the newline character.
     """
     
     list_of_lines = split_by_newline(raw_poem)
