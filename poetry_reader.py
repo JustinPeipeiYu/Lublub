@@ -193,14 +193,10 @@ def read_a_poetry_form_description(
     while (line_number < len(poems) and not poems[line_number].strip().isalpha() 
            and poems[line_number] != "\n"): 
         components = poems[line_number].strip().split()
-        components[0] = ((int)(components[0]))
+        if not components[0].isalpha(): 
+            components[0] = ((int)(components[0]))
         rhyming_lst.append(components[1])
         syllabic_lst.append(components[0])
         line_number += 1
     return (syllabic_lst, rhyming_lst), line_number
 
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod()
