@@ -89,16 +89,17 @@ def read_and_trim_whitespace(poem_file: TextIO) -> str:
     >>> import io
     >>> poem_file = io.StringIO(SAMPLE_POEM_FILE)
     >>> read_and_trim_whitespace(poem_file)
-    'Is this mic on?\\n\\nGet off my lawn.'
+    'Is this mic on?\\nGet off my lawn.'
     >>> import io
     >>> poem_file_2 = io.StringIO(SAMPLE_POEM_FILE_2)
     >>> read_and_trim_whitespace(poem_file_2)
-    'Hey you my name is Joe.\\n\\nI heard my name on the radio.'
+    'Hey you my name is Joe.\\nI heard my name on the radio.'
     """
     
     poem = ""
     for line in poem_file.readlines():
-        poem += line.strip() + "\n"
+        if line != "\n":
+            poem += line.strip() + "\n"
     return poem.strip()
 
 
@@ -204,3 +205,4 @@ def read_a_poetry_form_description(
         syllabic_lst.append(components[0])
         line_number += 1
     return (syllabic_lst, rhyming_lst), line_number
+
