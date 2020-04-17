@@ -206,4 +206,3 @@ def read_a_poetry_form_description(
         line_number += 1
     
     return (syllabic_lst, rhyming_lst), line_number
-
