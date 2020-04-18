@@ -32,20 +32,20 @@ def clean_word(s: str) -> str:
 
 
 def split_by_newline(raw_poem: str) -> List[str]:
-    """Return a list of the lines seperated by new line characters.
+    r"""Return a list of the lines seperated by new line characters.
     
     Precondition: raw_poem contains lines seperated only by newline characters.
     
-    >>> split_by_newline('The first line leads off,\\n\\n\\nWith a gap before the next.\\n    Then the poem ends.\\n')
+    >>> split_by_newline('The first line leads off,\n\n\nWith a gap before the next.\n    Then the poem ends.\n')
     ['The first line leads off,', '', '', 'With a gap before the next.', '    Then the poem ends.', '']
-    >>> split_by_newline('I am Fred.\\nI am twelve years old.\\n\\nSincerely,\\n\\nFred')
+    >>> split_by_newline('I am Fred.\nI am twelve years old.\n\nSincerely,\n\nFred')
     ['I am Fred.', 'I am twelve years old.', '', 'Sincerely,', '', 'Fred']
     """
     lines = raw_poem.split("\n")
     return lines
     
 def remove_empty_lines(lines: List[str]) -> List[str]:
-    """Return a list of the lines with empty lines removed.
+    r"""Return a list of the lines with empty lines removed.
     
     Precondition: The list contains only strings and empty strings.
     
@@ -61,7 +61,7 @@ def remove_empty_lines(lines: List[str]) -> List[str]:
     return non_empty_lines
 
 def break_apart_by_space(non_empty_lines: List[str]) -> List[List[str]]:
-    """Return a list of the lines broken apart by spaces to create a list 
+    r"""Return a list of the lines broken apart by spaces to create a list 
     of words for each line.
     
     Precondition: The list contains all non-empty strings.
@@ -78,14 +78,14 @@ def break_apart_by_space(non_empty_lines: List[str]) -> List[List[str]]:
     return lists_of_words
 
 def clean_poem(raw_poem: str) -> CLEAN_POEM:
-    """Return the non-blank, non-empty lines of poem, with whitespace removed
+    r"""Return the non-blank, non-empty lines of poem, with whitespace removed
     from the beginning and end of each line and all words capitalized.
     
     Precondition: The raw poem has to have lines seperated by the newline character.
     
-    >>> clean_poem('The first line leads off,\\n\\n\\nWith a gap before the next.\\n    Then the poem ends.\\n')
+    >>> clean_poem('The first line leads off,\n\n\nWith a gap before the next.\n    Then the poem ends.\n')
     [['THE', 'FIRST', 'LINE', 'LEADS', 'OFF'], ['WITH', 'A', 'GAP', 'BEFORE', 'THE', 'NEXT'], ['THEN', 'THE', 'POEM', 'ENDS']]
-    >>> clean_poem('I am Fred.\\nI am twelve years old.\\n\\nSincerely,\\n\\nFred')
+    >>> clean_poem('I am Fred.\nI am twelve years old.\n\nSincerely,\n\nFred')
     [['I', 'AM', 'FRED'], ['I', 'AM', 'TWELVE', 'YEARS', 'OLD'], ['SINCERELY'], ['FRED']]
     """
     
@@ -104,7 +104,7 @@ def clean_poem(raw_poem: str) -> CLEAN_POEM:
 def extract_phonemes(
         cleaned_poem: CLEAN_POEM,
         word_to_phonemes: PRONOUNCING_DICTIONARY) -> POEM_PRONUNCIATION:
-    """Return a list where each inner list contains the phonemes for the
+    r"""Return a list where each inner list contains the phonemes for the
     corresponding line of cleaned_poem, based on the word_to_phonemes
     pronouncing dictionary.
 
@@ -128,16 +128,16 @@ def extract_phonemes(
     return poem_of_phonemes
 
 def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
-    """Return a string containing all the phonemes in each word in each line in
+    r"""Return a string containing all the phonemes in each word in each line in
     poem_pronunciation. The phonemes are separated by spaces, the words are
     separated by ' | ', and the lines are separated by '\\n'.
 
     Precondition: There is at least one word/phoneme/line in poem pronunciation list.
     
     >>> phonemes_to_str([[['Y', 'EH1', 'S']], [['N', 'OW1'], ['Y', 'EH1', 'S']]])
-    'Y EH1 S\\nN OW1 | Y EH1 S'
+    'Y EH1 S\nN OW1 | Y EH1 S'
     >>> phonemes_to_str([[['HH', 'AY1']], [['HH', 'AY1'], ['B', 'AY1']]])
-    'HH AY1\\nHH AY1 | B AY1'
+    'HH AY1\nHH AY1 | B AY1'
     """
     
     poem_joined = []
@@ -152,7 +152,7 @@ def phonemes_to_str(poem_pronunciation: POEM_PRONUNCIATION) -> str:
 
 def get_common_last_syllables(
         poem_pronunciation: POEM_PRONUNCIATION) -> Dict[str, List[int]]:
-    """Return a dictionary of syllables as the keys with values as a list of all 
+    r"""Return a dictionary of syllables as the keys with values as a list of all 
     the line numbers that share that common syllable as the last syllable.
     
     Precondition: There is at least one line/word/phoneme in poem_pronunciation.
@@ -184,7 +184,7 @@ def get_common_last_syllables(
 
 def get_common_rhymes(
         common_syllables: Dict[str, List[int]]) -> Dict[str, List[int]]:
-    """Return a dictionary with rhyme letters corresponding to different syllables
+    r"""Return a dictionary with rhyme letters corresponding to different syllables
     as keys and the values are all the lines with that common rhyme letter.
     
     Precondition: There is at least one syllable in common_syllables with at least
@@ -206,7 +206,7 @@ def get_common_rhymes(
     return rhymes_and_lines
         
 def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
-    """Return a list of last syllables from the poem described by
+    r"""Return a list of last syllables from the poem described by
     poem_pronunction.
 
     Precondition: poem_pronunciation is not empty and each PHONEMES list
@@ -232,7 +232,7 @@ def get_rhyme_scheme(poem_pronunciation: POEM_PRONUNCIATION) -> List[str]:
     return output
 
 def get_num_syllables(poem_pronunciation: POEM_PRONUNCIATION) -> List[int]:
-    """Return a list of the number of syllables in each poem_pronunciation
+    r"""Return a list of the number of syllables in each poem_pronunciation
     line.
     
     Precondition: poem_ponunciation has at least one phoneme which is a syllable.
